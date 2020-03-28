@@ -1,11 +1,13 @@
 {
   "name": "prune-juice",
   "version": "0.0.1",
-  "description": "Implementation of sweep and prune in 2D and 3D",
+  "description": "Implementation of sweep and prune",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build-test": "npx tsc && npx browserify dist/prunejuice-test.js -o dist/prunejuice-test.bundle.js",
-    "test": "npx jest"
+    "test": "npx jest",
+    "prepublishOnly": "rm -rf dist && npx tsc"
   },
   "repository": {
     "type": "git",
@@ -34,10 +36,10 @@
     "collectCoverage": true
   },
   "devDependencies": {
-    "@types/jest": "^24.0.20",
+    "@types/jest": "^24.9.1",
     "browserify": "^16.5.0",
     "jest": "^24.9.0",
-    "ts-jest": "^24.1.0",
-    "typescript": "^3.6.4"
+    "ts-jest": "^24.3.0",
+    "typescript": "^3.8.3"
   }
 }

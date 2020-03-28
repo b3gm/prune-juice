@@ -1,34 +1,38 @@
 import CollisionDetection from './CollisionDetection';
-import BBox2 from './BBox2';
+import DimensionExtractor from './DimensionExtractor';
 
-export default class BruteForceCollision<T extends BBox2>
+export default class BruteForceCollision<T>
     implements CollisionDetection<T>
 {
 	private nodes:Array<T>;
 	
-	constructor() {
+	constructor(private readonly dimensions: Array<DimensionExtractor<T>>) {
 		this.nodes = [];
 	}
 	
-	public register(box:T) {
-		this.nodes.push(box);
+	public register(item:T) {
+		this.nodes.push(item);
 	}
 	
-	public unregister(box:T) {
+	public unregister(item:T) {
 		let b:T;
 		for(let i = 0; i != this.nodes.length; ++i) {
 			b = this.nodes[i];
-			if(b === box) {
-				this.nodes.slice(i, 1);
+			if(b === item) {
+				this.nodes.splice(i, 1);
 				break;
 			}
 		}
 	}
 	
 	private checkCollision(a:T, b:T) {
-		return this.intervalsOverlap(a.xStart, a.xEnd, b.xStart, b.xEnd)
-			&& this.intervalsOverlap(a.yStart, a.yEnd, b.yStart, b.yEnd); 
-	}
+        for (let dimension of this.dimensions) {
+            if(!this.intervalsOverlap(dimension.getStart(a), dimension.getEnd(a), dimension.getStart(b), dimension.getEnd(b))) {
+                return false;
+            }
+        }
+        return true;
+    }
 	
 	private intervalsOverlap(x1:number, x2:number, y1:number, y2:number) {
 		return !(x1 > y2 || y1 > x2);

@@ -1,10 +1,7 @@
 import insertionSort from './insertionSort';
-import ProcessingOrder2 from './ProcessingOrder2';
-import PruneJuice2 from './PruneJuice2';
-import SortFunction from './SortFunction';
-import BruteForceCollision from './BruteForceCollision';
+import PruneJuice from './PruneJuice';
 import CollisionDetection from './CollisionDetection';
-import BBox2 from './BBox2';
+import DimensionExtractor from './DimensionExtractor';
 
 let idCnt = 0;
 
@@ -118,7 +115,7 @@ function yCmp(a:Point, b:Point) {
 	return a.y - b.y;
 }
 
-class MyBox implements BBox2 {
+class MyBox {
     xStart:number;
     xEnd:number;
     yStart:number;
@@ -195,11 +192,19 @@ const tb = new MyBox(
     0
 );
 
-let pj:PruneJuice2<MyBox> = new PruneJuice2(ProcessingOrder2.XY, insertionSort);
+const dimensionExtractors: Array<DimensionExtractor<MyBox>> = [
+    {getStart: m => m.xStart, getEnd: m => m.xEnd},
+    {getStart: m => m.yStart, getEnd: m => m.yEnd}
+];
+
+let pj:PruneJuice<MyBox> = new PruneJuice(
+    dimensionExtractors,
+    insertionSort
+);
 
 [fb, sb, tb].forEach(b => pj.register(b));
 
-let pairs:Array<Array<BBox2>> = pj.getCollisionCandidates();
+let pairs:Array<Array<MyBox>> = pj.getCollisionCandidates();
 
 console.log('Found collisions:', pairs);
 
@@ -224,7 +229,7 @@ for(let i = 0; i != 40; ++i) {
 }
 
 let boxCollisions:CollisionDetection<MyBox>;
-boxCollisions = new PruneJuice2(ProcessingOrder2.XY, insertionSort);
+boxCollisions = new PruneJuice(dimensionExtractors, insertionSort);
 //boxCollisions = new BruteForceCollision();
 boxes.forEach(b => boxCollisions.register(b));
 

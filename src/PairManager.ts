@@ -1,4 +1,3 @@
-import BBox2 from './BBox2';
 import HMap from './HMap';
 import BoxWrap from './BoxWrap';
 import BoxPair from './BoxPair';
@@ -11,7 +10,7 @@ function pairEquals(a:BoxPair<any>, b:BoxPair<any>):boolean {
     return a.equals(b);
 }
 
-export default class PairManager<T extends BBox2> {
+export default class PairManager<T> {
     
     private pairs:HMap<BoxPair<T>, number> = new HMap(
         pairHash,
@@ -36,7 +35,7 @@ export default class PairManager<T extends BBox2> {
     }
     
     public getPairs():Array<Array<T>> {
-        const result = this.pairs.keys().map(b => [b.first.box, b.second.box]);
+        const result = this.pairs.keys().map(b => [b.first.item, b.second.item]);
         this.pairs.clear();
         return result;
     }

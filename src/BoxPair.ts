@@ -1,7 +1,6 @@
-import BBox2 from './BBox2';
 import BoxWrap from './BoxWrap';
 
-export default class BoxPair<T extends BBox2> {
+export default class BoxPair<T> {
     
     public readonly first:BoxWrap<T>;
     public readonly second:BoxWrap<T>;

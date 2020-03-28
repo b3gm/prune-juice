@@ -105,4 +105,45 @@ describe(HMap, () => {
         expect(map.keys().length).toBe(0);
         expect(map.size).toBe(0);
     });
+    
+    it('should correctly return current values', () => {
+        let keys: Array<number> = [];
+        let c = 0;
+        let inc = 1;
+        for (let i = 1; i <= 40; ++i) {
+            keys.push(c);
+            if (i % 6 == 0) {
+                c += 1;
+            }
+            if (i % 7 == 0) {
+                c += 4;
+            }
+            if (i % 11 == 0) {
+                c += 10;
+            }
+            c += inc;
+        }
+        for (let k of keys) {
+            map.put(k, 'number_' + k);
+        }
+        let values = map.values();
+        for (let k of keys) {
+            expect(values).toContain('number_' + k);
+        }
+        for(let i = 0; i < keys.length; ++i) {
+            const k = keys[i];
+            if (i % 3 == 2) {
+                map.remove(k);
+            }
+        }
+        values = map.values();
+        for(let i = 0; i < keys.length; ++i) {
+            const k = keys[i];
+            if (i % 3 != 2) {
+                expect(values).toContain('number_' + k);
+            } else {
+                expect(values).not.toContain('number_' + k);
+            }
+        }
+    });
 });
