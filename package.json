@@ -1,6 +1,6 @@
 {
   "name": "@b3gm/prune-juice",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Implementation of sweep and prune",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
