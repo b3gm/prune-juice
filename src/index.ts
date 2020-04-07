@@ -1,5 +1,1 @@
-import PruneJuice from './PruneJuice';
-
-export default {
-    PruneJuice
-}
+export { default } from './PruneJuice';

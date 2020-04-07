@@ -1,7 +1,6 @@
 import BoxWrap from './BoxWrap';
 import Dimension from './Dimension';
 import SortFunction from './SortFunction';
-import BoundMarker from './BoundMarker';
 import insertionSort from './insertionSort';
 import PairManager from './PairManager';
 import DimensionExtractor from './DimensionExtractor';
@@ -15,7 +14,7 @@ function wrapEquals(a:BoxWrap<any>, b:BoxWrap<any>):boolean {
     return a.item === b.item;
 }
 
-export default class PruineJuice<T> {
+export default class PruneJuice<T> {
     
     private idCnt:number = 0;
     
